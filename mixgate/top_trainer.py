@@ -19,10 +19,6 @@ from .utils.attention_utils import AttentionAnalyzer  # 添加导入
 
 import numpy as np
 
-# local_rank = int(os.environ['LOCAL_RANK'])
-
-# # 设置本地进程使用的 GPU
-# device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cpu")
 
 class TopTrainer():
     def __init__(self,
@@ -100,8 +96,6 @@ class TopTrainer():
                 tokens = attention_info['token_names'][batch_id]
                 
                 circuit_name = circuit_names[batch_id]
-                # 清理非法文件名字符
-                # safe_name = circuit_name.replace("/", "_").replace("\\", "_")[:50]  # 截断长名称
 
                 # 生成唯一标识
                 uid = f"epoch{self.model_epoch}_batch{batch_id}_{circuit_name}_{time.strftime('%m%d%H%M')}"
