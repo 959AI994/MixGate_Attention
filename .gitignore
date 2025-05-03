@@ -8,7 +8,7 @@ build
 dist
 *.egg-info
 
-exp
+# exp
 tmp
 data
 dataset
