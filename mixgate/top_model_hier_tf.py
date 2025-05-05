@@ -14,7 +14,7 @@ from .arch.mlp_aggr import MlpAggr
 from .arch.tfmlp import TFMlpAggr
 from .arch.gcn_conv import AggConv
 
-from .dc_model import Model as DeepCell
+# from .dc_model import Model as DeepCell
 from .dg_model_mig import Model as DeepGate_Mig
 from .dg_model_xmg import Model as DeepGate_Xmg
 from .dg_model_xag import Model as DeepGate_Xag
@@ -22,7 +22,7 @@ from .dg_model import Model as DeepGate_Aig
 from .hier_tf import HierarchicalTransformer
 import numpy as np
 
-from linformer import Linformer
+# from linformer import Linformer
 
 class TopModel(nn.Module):
     def __init__(self, 

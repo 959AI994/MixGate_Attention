@@ -121,7 +121,7 @@ def parse_pyg_mlpgate(x, edge_index, tt_dis, tt_pair_index, \
     edge_index = torch.tensor(edge_index, dtype=torch.long)
     edge_index = edge_index.t().contiguous()
     
-    tt_dis = torch.tensor(tt_dis.astype('float'))
+    tt_dis = torch.tensor(tt_dis)
     tt_pair_index = torch.tensor(tt_pair_index, dtype=torch.long).t().contiguous()
 
     forward_level, forward_index, backward_level, backward_index = return_order_info(edge_index, x_torch.size(0))

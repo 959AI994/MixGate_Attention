@@ -22,7 +22,7 @@ from .dg_model import Model as DeepGate_Aig
 from .hier_tf import HierarchicalTransformer
 import numpy as np
 
-from linformer import Linformer
+# from linformer import Linformer
 
 class TopModel(nn.Module):
     def __init__(self, 
@@ -108,7 +108,7 @@ class TopModel(nn.Module):
         masked_tokens[mask_indices, self.args.dim_hidden:] = self.mask_token
         return masked_tokens, mask_indices
 
-    def forward(self, G):
+    def forward(self, G, node_lutid_map={}):
         G.xmg_batch = G.batch
         self.device = next(self.parameters()).device
         mcm_predicted_tokens = torch.zeros(0, self.args.dim_hidden * 2).to(self.device)
@@ -154,7 +154,7 @@ class TopModel(nn.Module):
         # Hierarchical Transformer / Stone 03.13
         if self.args.hier_tf:
             tokens = [aig_tokens, xag_tokens, xmg_tokens, mig_tokens]
-            mcm_predicted_tokens = self.mask_tf(G, tokens, masked_tokens, masked_modal=selected_modality)
+            mcm_predicted_tokens = self.mask_tf(G, tokens, masked_tokens, masked_modal=selected_modality, node_lutid_map=node_lutid_map)
             transformer_output = mcm_predicted_tokens
             
         else:
@@ -231,6 +231,11 @@ class TopModel(nn.Module):
                 print('Drop parameter {}.'.format(k))
         for k in model_state_dict:
             if not (k in state_dict):
-                print('No param {}.'.format(k))
-                state_dict[k] = model_state_dict[k]
+                if 'lin_src.weight' in k:
+                    state_dict[k] = state_dict[k.replace('lin_src', 'lin')]
+                elif 'lin_dst.weight' in k:
+                    state_dict[k] = state_dict[k.replace('lin_dst', 'lin')]
+                else:
+                    print('No param {}.'.format(k))
+                    state_dict[k] = model_state_dict[k]
         self.load_state_dict(state_dict, strict=False)

@@ -8,10 +8,9 @@ build
 dist
 *.egg-info
 
-# exp
+exp
 tmp
 data
-dataset
 
 tmp.py
 debug.py
@@ -19,3 +18,5 @@ dataset_ai4eda.tar.bz2
 datasets/train_508_1.npz
 datasets/merged_all.npz
 dataset_ai4eda.tar.bz2
+
+model_last.pth
